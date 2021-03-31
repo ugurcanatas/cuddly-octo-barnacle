@@ -18,8 +18,29 @@ const dateScalar = new GraphQLScalarType({
   },
 });
 
+const doubleScalar = new GraphQLScalarType({
+  name: "DoubleType",
+  description: "DoubleType custom scalar type",
+  serialize(value) {
+    //console.log("SERIALIZE", value);
+    return parseFloat(value); // Convert outgoing Date to integer for JSON
+  },
+  parseLiteral(ast) {
+    console.log("PARSE LITERAL", ast);
+    if (ast.kind == Kind.FLOAT) {
+      return parseFloat(ast.value, 16);
+    }
+    return null;
+  },
+  parseValue(value) {
+    console.log("DOUBLE SCALAR VALUE", value);
+    return value;
+  },
+});
+
 export const resolvers = {
   Date: dateScalar,
+  DoubleType: doubleScalar,
   Query: {
     taxizones: () => TaxiZone.find(),
     getTaxiServiceZone: (_, args) => {
@@ -28,7 +49,7 @@ export const resolvers = {
     },
     trips: (_, args) => {
       const { tip_amount } = args;
-      return Trip.find().sort({ tip_amout: -1 }).limit(10);
+      return Trip.find().sort({ tip_amount: -1 }).limit(10);
     },
   },
   Mutation: {
