@@ -5,46 +5,44 @@ export const type2Module = createModule({
   id: "type-2-module-query-2",
   dirname: __dirname,
   typeDefs: gql`
-    type SpesificLocation {
-      _id: String
-      countOfVehicles: Int
+    type CustomDateID {
+      custom_id: Date
+      dateString: String
+    }
+
+    type DailyAvarageType {
+      _id: CustomDateID
+      avarageTotalAmount: DoubleType
     }
 
     extend type Query {
-      getSpesificLocation(
-        LocationID: Int
-        date_start: String
-        date_end: String
-      ): [SpesificLocation]
+      getDailyAvarage(sortType: String): [DailyAvarageType]
     }
   `,
   resolvers: {
     Query: {
-      getSpesificLocation: async (_, { LocationID, date_start, date_end }) => {
-        const data = await Trip.aggregate([
-          {
-            $match: {
-              $and: [
-                {
-                  PULocationID: LocationID,
-                },
-                {
-                  tpep_pickup_datetime: {
-                    $gte: new Date(date_start),
-                    $lte: new Date(date_end),
-                  },
-                },
-              ],
-            },
-          },
+      getDailyAvarage: (_, { sortType }) => {
+        const data = Trip.aggregate([
           {
             $group: {
-              _id: "$PULocationID",
-              countOfVehicles: { $sum: "$PULocationID" },
-              //countOfDate: { $sum: 1 },
+              _id: {
+                custom_id: "$tpep_pickup_datetime",
+                dateString: {
+                  $dateToString: {
+                    format: "%Y-%m-%d %H:%M:%S",
+                    date: "$tpep_pickup_datetime",
+                  },
+                },
+              },
+              avarageTotalAmount: {
+                $avg: "$total_amount",
+              },
             },
           },
-        ]);
+        ])
+          .allowDiskUse(true)
+          .sort({ avarageTotalAmount: sortType })
+          .limit(2);
         return data;
       },
     },
