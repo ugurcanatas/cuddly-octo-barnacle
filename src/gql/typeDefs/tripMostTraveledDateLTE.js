@@ -1,16 +1,10 @@
+//• Belirli mesafenin altında en ¸cok seyahat yapılan g¨un¨u ve seyahat uzunlu˘gunu bulunuz
+//(mesafe se¸cilebilmeli).
 import { gql } from "apollo-server";
 
 export const typeDefs = gql`
   scalar Date
   scalar DoubleType
-  type TaxiZone {
-    id: ID!
-    LocationID: Int!
-    Borough: String!
-    Zone: String!
-    service_zone: String!
-  }
-
   type Trip {
     id: ID
     VendorID: Int
@@ -44,20 +38,7 @@ export const typeDefs = gql`
     countOfDate: Int
   }
 
-  type Mutation {
-    insertTaxiZone(
-      LocationID: Int!
-      Borough: String!
-      Zone: String!
-      service_zone: String!
-    ): TaxiZone!
-  }
-
-  type Query {
-    taxizones: [TaxiZone]
-    getTaxiServiceZone(service_zone: String!): TaxiZone
-    #Find Top 5 max trip distance query
-    maxDistanceTrips: [Trip]
+  extend type Query {
     #Find most traveled day smaller than param
     mostTraveledUnder(trip_distance: DoubleType!): [CustomType]
   }

@@ -42,24 +42,52 @@ export const resolvers = {
   Date: dateScalar,
   DoubleType: doubleScalar,
   Query: {
-    taxizones: () => TaxiZone.find(),
-    getTaxiServiceZone: (_, args) => {
-      const { service_zone } = args;
-      return TaxiZone.findOne({ service_zone });
+    // taxizones: () => TaxiZone.find(),
+    // getTaxiServiceZone: (_, args) => {
+    //   const { service_zone } = args;
+    //   return TaxiZone.findOne({ service_zone });
+    // },
+    // En uzun mesafeli 5 yolculuktaki gün ve mesafeleri listeleyiniz.
+    maxDistanceTrips: () => {
+      return Trip.find().sort({ trip_distance: -1 }).limit(50);
     },
-    trips: (_, args) => {
-      const { tip_amount } = args;
-      return Trip.find().sort({ tip_amount: -1 }).limit(10);
+    //• Belirli mesafenin altında en ¸cok seyahat yapılan g¨un¨u ve seyahat uzunlu˘gunu bulunuz
+    //(mesafe se¸cilebilmeli).
+    mostTraveledUnder: async (_, { trip_distance }) => {
+      const data = await Trip.aggregate([
+        { $match: { trip_distance: { $lte: trip_distance } } },
+        {
+          $group: {
+            _id: {
+              custom_id: "$tpep_pickup_datetime",
+              dateString: {
+                $dateToString: {
+                  format: "%Y-%m-%d %H:%M:%S",
+                  date: "$tpep_pickup_datetime",
+                },
+              },
+            },
+            total: { $sum: "$trip_distance" },
+            countOfDate: { $sum: 1 },
+          },
+        },
+      ])
+        .allowDiskUse(true)
+        .sort({ total: -1 })
+        .limit(5);
+
+      console.log("WAITING FOR QUERY: ", data);
+      return data;
     },
   },
   Mutation: {
-    insertTaxiZone: (_, { LocationID, Borough, Zone, service_zone }) => {
-      return new TaxiZone({
-        LocationID,
-        Borough,
-        Zone,
-        service_zone,
-      }).save();
-    },
+    // insertTaxiZone: (_, { LocationID, Borough, Zone, service_zone }) => {
+    //   return new TaxiZone({
+    //     LocationID,
+    //     Borough,
+    //     Zone,
+    //     service_zone,
+    //   }).save();
+    // },
   },
 };
