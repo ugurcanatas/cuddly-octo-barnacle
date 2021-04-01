@@ -4,7 +4,7 @@ import { doubleScalar } from "../../CustomScalarTypes/dateScalar";
 import { Trip } from "../../../mongo-models/TaxiZone.js";
 
 export const type3Module = createModule({
-  id: "type-3-module",
+  id: "type-3-module-query-1",
   dirname: __dirname,
   typeDefs: gql`
     type Trip {
@@ -35,8 +35,6 @@ export const type3Module = createModule({
     }
   `,
   resolvers: {
-    Date: dateScalar,
-    DoubleType: doubleScalar,
     Query: {
       maxDistanceTrips: () => {
         return Trip.find().sort({ trip_distance: -1 }).limit(50);

@@ -3,7 +3,7 @@ import { doubleScalar } from "../../CustomScalarTypes/doubleScalar";
 import { Trip } from "../../../mongo-models/TaxiZone.js";
 
 export const type1Module = createModule({
-  id: "type-1-module",
+  id: "type-1-module-query-1",
   dirname: __dirname,
   typeDefs: gql`
     type MaxPassengerType {
@@ -17,7 +17,6 @@ export const type1Module = createModule({
     }
   `,
   resolvers: {
-    DoubleType: doubleScalar,
     Query: {
       findSumOfPassengers: async () => {
         const data = await Trip.aggregate([

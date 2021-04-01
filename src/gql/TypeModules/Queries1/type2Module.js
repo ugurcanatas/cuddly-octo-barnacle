@@ -1,10 +1,8 @@
 import { createModule, gql } from "graphql-modules";
-import { dateScalar } from "../../CustomScalarTypes/dateScalar";
-import { doubleScalar } from "../../CustomScalarTypes/doubleScalar";
 import { Trip } from "../../../mongo-models/TaxiZone.js";
 
 export const type2Module = createModule({
-  id: "type-2-module",
+  id: "type-2-module-query-1",
   dirname: __dirname,
   typeDefs: gql`
     type CustomIDType {
@@ -24,8 +22,6 @@ export const type2Module = createModule({
     }
   `,
   resolvers: {
-    Date: dateScalar,
-    DoubleType: doubleScalar,
     Query: {
       mostTraveledUnder: async (_, { trip_distance }) => {
         const data = await Trip.aggregate([
