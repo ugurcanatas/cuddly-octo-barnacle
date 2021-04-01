@@ -2,7 +2,7 @@ import { createModule, gql } from "graphql-modules";
 import { Trip } from "../../../mongo-models/TaxiZone.js";
 
 export const type3Module = createModule({
-  id: "type-2-module-query-2",
+  id: "type-3-module-query-2",
   dirname: __dirname,
   typeDefs: gql`
     extend type Query {
