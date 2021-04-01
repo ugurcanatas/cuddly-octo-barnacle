@@ -6,6 +6,6 @@
 - [x] En uzun mesafeli 5 yolculuktaki gün ve mesafeleri listeleyiniz.
 
 #Queries 2
-- [] ...
+- [] Iki tarih arasında belirli bir lokasyondan hareket eden araç sayısı kaçtır? (tarihler ve lokasyon seçilebilmeli)
 - [] ...
 - [x] İki tarih arasında seyahat edilen en az mesafeli 5 yolculuk hangisidir? (tarihler seçilebilmeli).
