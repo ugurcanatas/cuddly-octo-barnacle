@@ -1,7 +1,7 @@
 import { createModule, gql } from "graphql-modules";
-import { dateScalar } from "../CustomScalarTypes/dateScalar";
-import { doubleScalar } from "../CustomScalarTypes/doubleScalar";
-import { Trip } from "../../mongo-models/TaxiZone.js";
+import { dateScalar } from "../../CustomScalarTypes/dateScalar";
+import { doubleScalar } from "../../CustomScalarTypes/dateScalar";
+import { Trip } from "../../../mongo-models/TaxiZone.js";
 
 export const type3Module = createModule({
   id: "type-3-module",

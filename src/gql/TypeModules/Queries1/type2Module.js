@@ -1,7 +1,7 @@
 import { createModule, gql } from "graphql-modules";
-import { dateScalar } from "../CustomScalarTypes/dateScalar";
-import { doubleScalar } from "../CustomScalarTypes/doubleScalar";
-import { Trip } from "../../mongo-models/TaxiZone.js";
+import { dateScalar } from "../../CustomScalarTypes/dateScalar";
+import { doubleScalar } from "../../CustomScalarTypes/doubleScalar";
+import { Trip } from "../../../mongo-models/TaxiZone.js";
 
 export const type2Module = createModule({
   id: "type-2-module",
@@ -18,7 +18,7 @@ export const type2Module = createModule({
       countOfDate: Int
     }
 
-    type Query {
+    extend type Query {
       #Find most traveled day smaller than param
       mostTraveledUnder(trip_distance: DoubleType!): [CustomType]
     }
