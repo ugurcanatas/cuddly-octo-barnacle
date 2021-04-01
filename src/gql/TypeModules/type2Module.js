@@ -7,9 +7,6 @@ export const type2Module = createModule({
   id: "type-2-module",
   dirname: __dirname,
   typeDefs: gql`
-    scalar Date
-    scalar DoubleType
-
     type CustomIDType {
       custom_id: Date
       dateString: String
