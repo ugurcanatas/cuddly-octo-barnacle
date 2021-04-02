@@ -1,5 +1,4 @@
 import { createModule, gql } from "graphql-modules";
-import { doubleScalar } from "../../CustomScalarTypes/doubleScalar";
 import { Trip } from "../../../mongo-models/TaxiZone.js";
 
 export const type1Module = createModule({

@@ -9,6 +9,7 @@ import { type2Module as t2ModuleQ2 } from "./TypeModules/Queries2/type2Module.js
 import { type3Module as t3ModuleQ2 } from "./TypeModules/Queries2/type3Module.js";
 //Query 3
 import { type1Module as t1ModuleQ3 } from "./TypeModules/Queries3/type1Module.js";
+import { type2Module as t2ModuleQ3 } from "./TypeModules/Queries3/type2Module.js";
 
 import { typeOthers } from "./TypeModules/typeOthers.js";
 import { typeScalars } from "./TypeModules/typeScalars.js";
@@ -35,6 +36,7 @@ const application = createApplication({
     t2ModuleQ2,
     t3ModuleQ2,
     t1ModuleQ3,
+    t2ModuleQ3,
   ],
 });
 

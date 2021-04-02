@@ -1,28 +1,35 @@
 import { createModule, gql } from "graphql-modules";
 import { Trip } from "../../../mongo-models/TaxiZone.js";
 
-export const type1Module = createModule({
-  id: "type-1-module-query-3",
+export const type2Module = createModule({
+  id: "type-2-module-query-3",
   dirname: __dirname,
   typeDefs: gql`
     extend type Query {
-      getLongestTripByDate(date: String!): [TripTypeWithLookup]
+      getRandom5(date: String!, LocationID: Int!): [TripTypeWithLookup]
     }
   `,
   resolvers: {
     Query: {
-      getLongestTripByDate: async (_, { date }) => {
+      getRandom5: async (_, { date, LocationID }) => {
         const lteDate = new Date(date);
         lteDate.setDate(new Date(date).getDate() + 1);
-        console.log("Date Start", new Date(date));
-        console.log("Date End", lteDate);
         const data = await Trip.aggregate([
           {
             $match: {
-              tpep_pickup_datetime: {
-                $gte: new Date(date),
-                $lt: lteDate,
-              },
+              $and: [
+                {
+                  tpep_pickup_datetime: {
+                    $gte: new Date(date),
+                    $lt: lteDate,
+                  },
+                },
+                {
+                  PULocationID: {
+                    $eq: LocationID,
+                  },
+                },
+              ],
             },
           },
           {
@@ -33,9 +40,8 @@ export const type1Module = createModule({
               as: "lookup_result",
             },
           },
-        ])
-          .sort({ trip_distance: "desc" })
-          .limit(1);
+          { $sample: { size: 5 } },
+        ]);
         return data;
       },
     },
