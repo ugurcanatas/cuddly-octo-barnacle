@@ -1,10 +1,15 @@
 import { createModule, gql } from "graphql-modules";
 import { TaxiZone } from "../../mongo-models/TaxiZone.js";
 
-export const typeLocationsModule = createModule({
+export const typeOthers = createModule({
   id: "type-lookup-module",
   dirname: __dirname,
   typeDefs: gql`
+    type CustomIDType {
+      custom_id: Date
+      dateString: String
+    }
+
     type Locations {
       LocationID: Int
       Borough: String

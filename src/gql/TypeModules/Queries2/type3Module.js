@@ -6,7 +6,7 @@ export const type3Module = createModule({
   dirname: __dirname,
   typeDefs: gql`
     extend type Query {
-      getMinDistanceTrips(date_first: String, date_second: String): [Trip]
+      getMinDistanceTrips(date_first: String!, date_second: String!): [Trip]
     }
   `,
   resolvers: {

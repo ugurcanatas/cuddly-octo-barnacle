@@ -12,9 +12,9 @@ export const type1Module = createModule({
 
     extend type Query {
       getSpesificLocation(
-        LocationID: Int
-        date_start: String
-        date_end: String
+        LocationID: Int!
+        date_start: String!
+        date_end: String!
       ): [SpesificLocation]
     }
   `,

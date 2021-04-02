@@ -5,11 +5,6 @@ export const type2Module = createModule({
   id: "type-2-module-query-1",
   dirname: __dirname,
   typeDefs: gql`
-    type CustomIDType {
-      custom_id: Date
-      dateString: String
-    }
-
     type CustomType {
       _id: CustomIDType
       total: DoubleType

@@ -5,18 +5,13 @@ export const type2Module = createModule({
   id: "type-2-module-query-2",
   dirname: __dirname,
   typeDefs: gql`
-    type CustomDateID {
-      custom_id: Date
-      dateString: String
-    }
-
     type DailyAvarageType {
-      _id: CustomDateID
+      _id: CustomIDType
       avarageTotalAmount: DoubleType
     }
 
     extend type Query {
-      getDailyAvarage(sortType: String): [DailyAvarageType]
+      getDailyAvarage(sortType: String!): [DailyAvarageType]
     }
   `,
   resolvers: {
