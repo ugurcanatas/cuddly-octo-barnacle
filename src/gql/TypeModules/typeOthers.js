@@ -53,6 +53,7 @@ export const typeOthers = createModule({
       title: String
       excerpt: String
       toOnClick: String
+      gradientColors: [String]
     }
 
     type Cards {

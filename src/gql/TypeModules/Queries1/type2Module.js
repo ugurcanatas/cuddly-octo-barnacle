@@ -13,14 +13,15 @@ export const type2Module = createModule({
 
     extend type Query {
       #Find most traveled day smaller than param
-      mostTraveledUnder(trip_distance: DoubleType!): [CustomType]
+      mostTraveledUnder(trip_distance: String!): [CustomType]
     }
   `,
   resolvers: {
     Query: {
       mostTraveledUnder: async (_, { trip_distance }) => {
+        console.log("Request received", trip_distance);
         const data = await Trip.aggregate([
-          { $match: { trip_distance: { $lte: trip_distance } } },
+          { $match: { trip_distance: { $lte: parseFloat(trip_distance) } } },
           {
             $group: {
               _id: {

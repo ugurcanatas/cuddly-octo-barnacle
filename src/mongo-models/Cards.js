@@ -10,6 +10,7 @@ const CardsSchema = new Schema({
       title: String,
       excerpt: String,
       toOnClick: String,
+      gradientColors: [String],
     },
   ],
 });

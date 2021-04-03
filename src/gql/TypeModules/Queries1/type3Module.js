@@ -25,6 +25,7 @@ export const type3Module = createModule({
       improvement_surcharge: DoubleType
       total_amount: DoubleType
       congestion_surcharge: DoubleType
+      convertedDate: String
     }
 
     extend type Query {
@@ -35,7 +36,20 @@ export const type3Module = createModule({
   resolvers: {
     Query: {
       maxDistanceTrips: () => {
-        return Trip.find().sort({ trip_distance: -1 }).limit(50);
+        return Trip.aggregate([
+          {
+            $addFields: {
+              convertedDate: {
+                $dateToString: {
+                  format: "%Y-%m-%d %H:%M:%S",
+                  date: "$tpep_pickup_datetime",
+                },
+              },
+            },
+          },
+        ])
+          .sort({ trip_distance: -1 })
+          .limit(10);
       },
     },
   },
