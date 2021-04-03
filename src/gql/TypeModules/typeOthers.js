@@ -1,5 +1,6 @@
 import { createModule, gql } from "graphql-modules";
 import { TaxiZone } from "../../mongo-models/TaxiZone.js";
+import { Card } from "../../mongo-models/Cards.js";
 
 export const typeOthers = createModule({
   id: "type-lookup-module",
@@ -48,14 +49,30 @@ export const typeOthers = createModule({
       lookup_result: [TaxiZone]
     }
 
+    type CardItems {
+      title: String
+      excerpt: String
+      toOnClick: String
+    }
+
+    type Cards {
+      custom_field_id: String
+      title: String
+      items: [CardItems]
+    }
+
     extend type Query {
       getLocations: [Locations]
+      getCardsLayout: [Cards]
     }
   `,
   resolvers: {
     Query: {
       getLocations: async () => {
         return await TaxiZone.find();
+      },
+      getCardsLayout: async () => {
+        return await Card.find();
       },
     },
   },
