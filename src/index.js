@@ -8,6 +8,10 @@ const server = new ApolloServer({
   // typeDefs,
   // resolvers,
   schema,
+  cors: {
+    origin: "http://localhost:19006",
+    credentials: true,
+  },
 });
 
 mongoose
