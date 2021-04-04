@@ -20,10 +20,14 @@ export const typeOthers = createModule({
 
     type TaxiZone {
       _id: String
+      OBJECTID: Int!
       LocationID: Int!
       Borough: String!
       Zone: String!
-      service_zone: String!
+      X: DoubleType
+      Y: DoubleType
+      Shape_Leng: DoubleType
+      Shape_Area: DoubleType
     }
 
     type TripTypeWithLookup {

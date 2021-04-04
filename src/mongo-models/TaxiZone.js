@@ -4,9 +4,13 @@ const { Schema } = mongoose;
 
 const TaxiZoneSchema = new Schema({
   LocationID: Number,
+  OBJECTID: Number,
   Borough: String,
   Zone: String,
-  service_zone: String,
+  X: mongoose.Types.Decimal128,
+  Y: mongoose.Types.Decimal128,
+  Shape_Leng: mongoose.Types.Decimal128,
+  Shape_Area: mongoose.Types.Decimal128,
 });
 
 const TripSchema = new Schema({
