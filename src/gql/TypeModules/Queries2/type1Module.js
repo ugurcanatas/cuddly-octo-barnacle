@@ -7,7 +7,9 @@ export const type1Module = createModule({
   typeDefs: gql`
     type SpesificLocation {
       _id: String
+      PULocationID: Int
       countOfVehicles: Int
+      lookup_result: [TaxiZone]
     }
 
     extend type Query {
@@ -41,7 +43,16 @@ export const type1Module = createModule({
             $group: {
               _id: "$PULocationID",
               countOfVehicles: { $sum: "$PULocationID" },
+              PULocationID: { $first: "$PULocationID" },
               //countOfDate: { $sum: 1 },
+            },
+          },
+          {
+            $lookup: {
+              from: "taxizones",
+              localField: "PULocationID",
+              foreignField: "LocationID",
+              as: "lookup_result",
             },
           },
         ]);
