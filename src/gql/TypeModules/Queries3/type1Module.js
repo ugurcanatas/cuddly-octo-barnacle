@@ -5,8 +5,32 @@ export const type1Module = createModule({
   id: "type-1-module-query-3",
   dirname: __dirname,
   typeDefs: gql`
+    type TripTypeWithDOPU {
+      id: ID
+      VendorID: Int
+      tpep_pickup_datetime: Date
+      tpep_dropoff_datetime: Date
+      passenger_count: Int
+      trip_distance: DoubleType
+      RatecodeID: Int
+      store_and_fwd_flag: String
+      PULocationID: Int
+      DOLocationID: Int
+      payment_type: Int
+      fare_amount: DoubleType
+      extra: DoubleType
+      mta_tax: DoubleType
+      tip_amount: DoubleType
+      tolls_amount: DoubleType
+      improvement_surcharge: DoubleType
+      total_amount: DoubleType
+      congestion_surcharge: DoubleType
+      PULocationResult: [TaxiZone]
+      DOLocationResult: [TaxiZone]
+    }
+
     extend type Query {
-      getLongestTripByDate(date: String!): [TripTypeWithLookup]
+      getLongestTripByDate(date: String!): [TripTypeWithDOPU]
     }
   `,
   resolvers: {
@@ -30,7 +54,15 @@ export const type1Module = createModule({
               from: "taxizones",
               localField: "PULocationID",
               foreignField: "LocationID",
-              as: "lookup_result",
+              as: "PULocationResult",
+            },
+          },
+          {
+            $lookup: {
+              from: "taxizones",
+              localField: "DOLocationID",
+              foreignField: "LocationID",
+              as: "DOLocationResult",
             },
           },
         ])
