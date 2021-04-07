@@ -17,6 +17,8 @@ export const type1Module = createModule({
   `,
   resolvers: {
     Query: {
+      // SQL Conversion
+      // SELECT tpep_pickup_datetime as dateString, SUM(passenger_count) AS sumPassengers FROM trips GROUP BY _id, dateString
       findSumOfPassengers: async () => {
         const data = await Trip.aggregate([
           {
