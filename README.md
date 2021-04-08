@@ -31,3 +31,9 @@
 #### incomplete
 
 `SELECT AVG(total_amount) AS avarageTotalAmount FROM trips GROUP BY tpep_pickup_datetime`
+
+### Query 2
+
+#### incomplete
+
+`SELECT * FROM trips WHERE tpep_pickup_datetime BETWEEN START_DATE AND END_DATE ORDER BY trip_distance DESC LIMIT 10`
