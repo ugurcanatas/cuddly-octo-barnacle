@@ -1,3 +1,4 @@
+require("dotenv").config();
 import mongoose from "mongoose";
 import { ApolloServer } from "apollo-server";
 import { schema } from "./gql/index.js";
@@ -14,8 +15,9 @@ const server = new ApolloServer({
   },
 });
 
+//MONGO CLOUD CONNECTION STRING
 mongoose
-  .connect("mongodb://localhost:27017/taxiDB", {
+  .connect(process.env.MONGO_ATLAS, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
